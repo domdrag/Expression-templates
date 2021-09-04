@@ -284,9 +284,9 @@ int main() {
     /////////////////////////////////////////
     /////////////////////////////////////////
 
-    /*loop_test_mat(clock, 10);
-    good_matrix(clock, 10);
-    eigen_matrix(clock, 10);
+    /*loop_test_mat(clock, 32);
+    good_matrix(clock, 32);
+    eigen_matrix(clock, 32);
 
     ////////////////////////////////////////
 
@@ -301,10 +301,6 @@ int main() {
     eigen_matrix(clock, 320);*/
 
     /////////////////////////////////////////
-    
-    loop_test_mat(clock, 32);
-    eigen_matrix(clock, 32);
-    good_matrix(clock, 32);
 
     return 0;
 }
