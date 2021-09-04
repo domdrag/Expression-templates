@@ -36,8 +36,9 @@ public:
         expr_rep(size, value), mSize(size) {
     }
 
+
     Vector& operator= (const Vector& b){
-        for (std::size_t idx = 0; idx < b.size(); ++idx){
+        for (std::size_t idx = 0; idx < mSize; ++idx){
             expr_rep[idx] = b[idx];
         }
         return *this;
@@ -84,7 +85,7 @@ public:
     }
 
     std::size_t size() const {
-        return expr_rep.size();
+        return mSize;
     }
 
     const Rep& rep() const{
@@ -102,9 +103,7 @@ public:
 
 private:
     Rep expr_rep;
-     // Adrese potrebnih vektora/matrica zbog kojih mozda trebamo kreirati temp. 
-     //std::vector<T*> mAddresses; 
-     std::size_t mSize;
+    std::size_t mSize;
 
      T* addr() const {
          return expr_rep.addr();

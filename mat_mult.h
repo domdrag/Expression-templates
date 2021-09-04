@@ -17,14 +17,6 @@ public:
         return sum;
     }
 
-    T operator() (std::size_t idx, std::size_t idy) const {
-        T sum = 0;
-        for (std::size_t id = 0; id < op2.rows(); ++id) {
-            sum += op1(idx, id) * op2(id, idy);
-        }
-        return sum;
-    }
-
     std::size_t size() const {
         return op2.size();
     }

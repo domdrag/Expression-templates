@@ -11,10 +11,6 @@ public:
         init();
     }
 
-    SMatrix(const SMatrix& orig) : SMatrix(orig.rows(), orig.columns()) {
-        copy(orig);
-    }
-
     using init_list = std::initializer_list<std::initializer_list<T> >;
     SMatrix(const init_list& list) : SMatrix(list.size(), (*list.begin()).size()) {
         auto current_row = list.begin();
@@ -47,10 +43,6 @@ public:
         return storage[row * mColumns + col];
     }
 
-    const T& operator[] (std::size_t idx) const {
-        return storage[idx];
-    }
-
     T& operator[] (std::size_t idx) {
         return storage[idx];
     }
@@ -59,13 +51,7 @@ public:
 
     const std::size_t& columns() const { return mColumns; }
 
-    T* addr() const {
-        return storage;
-    }
-
     bool check_addr(T* addr) const{
-        if(addr == storage)
-            return true;
         return false;
     }
 

@@ -3,6 +3,7 @@
 #include <cstddef>
 #include <cassert>
 #include <iostream>
+#include <initializer_list>
 
 #include "bad_vector.h"
 
@@ -23,6 +24,21 @@ public:
 	SDoubleArray(std::size_t row, std::size_t col, Device dev) : SDoubleArray(row, col) {
 		copy(dev);
 	}
+
+	using init_list = std::initializer_list<std::initializer_list<T> >;
+    SDoubleArray(const init_list& list) : SDoubleArray(list.size(), (*list.begin()).size()) {
+        auto current_row = list.begin();
+        std::size_t idx = 0;
+        while (current_row != list.end()) {
+            auto current_col = (*current_row).begin();
+            auto col_end = (*current_row).end();
+            while (current_col != col_end) {
+                storage[idx++] = (*current_col);
+                ++current_col;
+            }
+            ++current_row;
+        }
+    }
 
 	// copy constructor
 	SDoubleArray(SDoubleArray<T> const& orig)
@@ -89,9 +105,11 @@ template<typename T>
 SDoubleArray<T> operator+ (SDoubleArray<T> const& a, SDoubleArray<T> const& b)
 {
 	SDoubleArray<T> result(a.rows(), b.columns());
+	
 	for (std::size_t k = 0; k < a.rows()*a.columns(); ++k) {
 		result[k] = a[k] + b[k];
 	}
+
 	return result;
 }
 // multiplication of two SArrays
@@ -99,8 +117,13 @@ template<typename T>
 SDoubleArray<T> operator* (SDoubleArray<T> const& a, SDoubleArray<T> const& b)
 {
 	SDoubleArray<T> result(a.rows(), b.columns());
-	for (std::size_t k = 0; k < a.rows()*a.columns(); ++k) {
-		result[k] = a[k] * b[k];
+	
+	for ( size_t i=0; i<a.rows(); ++i ) {
+		for ( size_t j=0; j<b.columns (); ++j ) {
+			for ( size_t k=0; k<b.columns(); ++k ) {
+				result(i,k) += a(i,j) * b(j,k);
+			}
+		}
 	}
 	return result;
 }
@@ -119,24 +142,31 @@ SDoubleArray<T> operator* (T const& s, SDoubleArray<T> const& a)
 template<typename T>
 SArray<T> operator* (SDoubleArray<T> const& a, SArray<T> const& b)
 {
-	SArray<T> result(b.size());
+	SArray<T> result(a.rows());
+
 	for (std::size_t k = 0; k < a.rows(); ++k) {
 		for(std::size_t l = 0; l < a.columns(); ++l){
-			result[k] += a(k,l) * a[l];
+			result[k] += a(k,l) * b[l];
 		}
 	}
 	return result;
 }
 
 template <typename T>
-std::ostream& operator<< (std::ostream& out, const SDoubleArray<T>& vect) {
-	out << '[';
-	for (std::size_t idx = 0; idx < vect.size() - 1; ++idx) {
-		out << vect[idx] << ", ";
-	}
-	if (vect.size() > 0) {
-		out << vect[vect.size() - 1];
-	}
-	out << ']';
-	return out;
+std::ostream& operator<< (std::ostream& out, const SDoubleArray<T>& mat) {
+    out << '[';
+    for (std::size_t idx = 0; idx < mat.rows(); ++idx) {
+        for (std::size_t idy = 0; idy < mat.columns(); ++idy) {
+            if (idx == mat.rows() - 1 && idy == mat.columns() - 1)
+                continue;
+            out << mat(idx, idy) << ", ";
+        }
+        if(idx != mat.rows()-1)
+            out << "\n ";
+    }
+    if (mat.rows() + mat.columns() > 0) {
+        out << mat(mat.rows()-1, mat.columns()-1);
+    }
+    out << "]\n";
+    return out;
 }

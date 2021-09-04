@@ -16,6 +16,15 @@ public:
 		init();
 	}
 
+	SArray(const std::initializer_list<T>& list) : SArray(list.size()) {
+        auto begin = list.begin();
+        std::size_t idx = 0;
+        while (begin != list.end()) {
+            storage[idx++] = *begin;
+            ++begin;
+        }
+    }
+
 	template <typename Device>
 	SArray(std::size_t size, Device dev) : SArray(size) {
 		copy(dev);

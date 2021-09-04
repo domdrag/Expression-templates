@@ -1,5 +1,6 @@
 #pragma once
 
+#include <typeinfo>
 #include <cassert>
 #include <cstddef>
 #include <vector>
@@ -10,10 +11,9 @@
 #include "scalar.h"
 #include "mat_mult.h"
 
-template <typename T, typename Rep = SMatrix<T>, bool Mat_Mult = false>
+template <typename T, typename Rep = SMatrix<T>>
 class Matrix {
 public:
-    template <typename, typename, bool> friend class Matrix;
 
     explicit Matrix(std::size_t row, std::size_t col)
         : expr_rep(row,col), mRows(row), mColumns(col) {  }
@@ -36,6 +36,16 @@ public:
         : expr_rep(row, col, value), mRows(row), mColumns(col) {
     }
 
+    template <typename T2, typename Rep2>
+    Matrix(const Matrix<T2, Rep2>& b) 
+        : expr_rep(b.rows(),b.columns()), mRows(b.rows()), mColumns(b.columns())  {
+        for (std::size_t idx = 0; idx < mRows; ++idx) {
+            for (std::size_t idy = 0; idy < mColumns; ++idy) {
+                expr_rep(idx, idy) = b(idx, idy);
+            }
+        }  
+    }
+
     Matrix& operator= (const Matrix& b) {
         for (std::size_t idx = 0; idx < mRows; ++idx) {
             for (std::size_t idy = 0; idy < mColumns; ++idy) {
@@ -45,42 +55,12 @@ public:
         return *this;
     }
 
-    template <typename T2, typename Rep2, bool Mat_Mult2>
-    Matrix& operator= (const Matrix<T2, Rep2, Mat_Mult2>& b) {
-
-        for (std::size_t idx = 0; idx < mRows; ++idx) {
-            for (std::size_t idy = 0; idy < mColumns; ++idy) {
-                expr_rep(idx, idy) = b(idx, idy);
-            }
-        }
-
-        return *this;
-    }
-
     template <typename T2, typename Rep2>
-    Matrix& operator= (const Matrix<T2, Rep2, true>& b) {
-        // Ako se vektor na lijevoj strani pridruzivanja pojavljuje u mnozenju sa matricom na desnoj strani
-        // tada je potrebno kreirati temp. objekt
-
-        if(b.check_addr(addr())){
-            T* temp = new T[mRows * mColumns];
-            for (std::size_t idx = 0; idx < mRows; ++idx) {
-                for (std::size_t idy = 0; idy < mColumns; ++idy) {
-                    temp[idx * mRows + idy] = b(idx, idy);
-                }
-            }
-
-            for (std::size_t id = 0; id < mRows*mColumns; ++id) {
-                expr_rep[id] = temp[id];
-            }
-
-            return *this;
-        }
-
+    Matrix& operator= (const Matrix<T2, Rep2>& b) {
         for (std::size_t idx = 0; idx < mRows; ++idx) {
             for (std::size_t idy = 0; idy < mColumns; ++idy) {
                 expr_rep(idx, idy) = b(idx, idy);
-            }
+            } 
         }
 
         return *this;
@@ -102,10 +82,6 @@ public:
         return expr_rep(row, col);
     }
 
-    decltype(auto) operator[] (std::size_t idx) const {
-        return expr_rep[idx];
-    }
-
     const Rep& rep() const {
         return expr_rep;
     }
@@ -114,18 +90,11 @@ public:
         return expr_rep;
     }
 
-    bool check_addr(T* addr) const {
-        return expr_rep.check_addr(addr);
-    }
-
 private:
     Rep expr_rep;
     std::size_t mRows;
     std::size_t mColumns;
 
-    T* addr() const {
-         return expr_rep.addr();
-     }
 };
 
 
