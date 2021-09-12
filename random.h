@@ -4,10 +4,11 @@
 
 #include "traits.h"
 
+// sluzi sa inicijalizaciju random brojevima iz nekog intervala
 template <typename T>
 class Random {
 public:
-    Random(T a, T b);
+    Random(T a, T b); // interval [a,b]
     Random(Random const& rhs);
     Random& operator=(Random const& rhs) = delete;
     T operator[](std::size_t);

@@ -1,6 +1,5 @@
 #pragma once
 
-#include <cassert>
 #include <initializer_list>
 
 template <typename T>

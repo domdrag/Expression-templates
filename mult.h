@@ -6,6 +6,7 @@ public:
     explicit Mult(const OP1& a, const OP2& b)
         : op1(a), op2(b) {  }
 
+    // sve ostalo
     T operator[] (std::size_t idx) const{
         return op1[idx] * op2[idx];
     }

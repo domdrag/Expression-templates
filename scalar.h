@@ -9,6 +9,7 @@ public:
         return s;
     }
 
+    // Matrix = Scalar * Matrix
     const T& operator() (std::size_t row, std::size_t col) const{
         return s;
     }

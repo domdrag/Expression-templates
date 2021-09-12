@@ -1,8 +1,5 @@
 #pragma once
 
-#include <cassert>
-#include <cstddef>
-
 #include "traits.h"
 
 template <typename T, typename OP1, typename OP2>
