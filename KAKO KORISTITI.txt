@@ -1,7 +1,0 @@
-1.) Open cmd
-2.) cd Desktop/FAKS/Diplomski Rad/source/Diplomski_vs_code 
-3.) code .
-4.) Open main.cpp in editor
-5.) Ctrl + Shift + B (build)
-6.) Click + to open new powershell
-7.) .\main
