@@ -1,4 +1,7 @@
 # Diplomski_vs_code
+
+# Pokretanje programa - main.exe
+
 Predložni izrazi (expression templates)
 
 Klase spremnika (eng. *container classes*) predstavljaju posebnu vrstu klasa dizajniranih da spremaju kolekciju nekakvih objekata. Takve klase imaju široko područje primjene, od biblioteka matrica u znastvenom računanju do reprezentacije grafova u modeliranju. Često su skupovi podataka koje instance takvih klasa spremaju ogromni veličinom stoga je nužno obratiti pozornost na efikasnost operacija nad tim podacima. Naime, ukoliko programer ne obrati pažnju na performanse, kao što ćemo pokazati u ovom radu, dolazi do nepotrebnog kopiranja unutar memorije. Ako su skupovi podataka preveliki ta kopiranja oduzimaju puno vremena pa samim time efikasnost algoritma neće biti zadovoljavajuća. 
