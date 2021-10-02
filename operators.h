@@ -100,3 +100,4 @@ template <typename T, typename R1, typename R2, bool M2>
 Vector<T, Mat_Mult<T, R1, R2>, true> operator* (const Matrix<T, R1>& a, const Vector<T, R2, M2>& b) {
     return Vector<T, Mat_Mult<T, R1, R2>, true>(Mat_Mult<T, R1, R2>(a.rep(), b.rep()));
 }
+

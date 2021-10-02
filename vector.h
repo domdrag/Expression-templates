@@ -123,3 +123,4 @@ std::ostream& operator<< (std::ostream& out, const Vector<T,Rep>& vect) {
     return out;
 }
 
+
