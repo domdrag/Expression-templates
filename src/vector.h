@@ -65,6 +65,7 @@ public:
             for (std::size_t idx = 0; idx < mSize; ++idx) {
                 expr_rep[idx] = temp[idx];
             }
+            delete[] temp;
             return *this;
         }
 
