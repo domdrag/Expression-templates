@@ -4,4 +4,3 @@ Klase spremnika (eng. *container classes*) predstavljaju posebnu vrstu klasa diz
 
 Tema ovog rada upravo opisuje jednu od tehnika u programskom jeziku C++ kojom se sprječava nepotrebno kopiranje, ali i smanjuje broj čitanja odnosno zapisavanja memorijskih lokacija. Navedenu tehniku nazivamo predložni izrazi (eng. *expression templates*). Tehnika spada pod metaprogramiranje pa prvo dajemo uvod u metaprogramiranje i metaprogramiranje predlošcima. Zatim stvaramo biblioteku vektora i pripadnih operacija naivnim pristupom i uočavamo propuste u samom izvođenju i efikasnosti. Probleme rješavamo pomoću predložnih izraza. Također pokazujemo kako tehniku iskoristiti u implementaciji matrica i matričnih operacija. Na kraju uspoređujemo učinkovitosti dobivenih implementacija sa Eigen bibliotekom koja također koristi predložne izraze, ali i brojne druge tehnike optimizacija.
 
-# Pokretanje programa - main.exe
