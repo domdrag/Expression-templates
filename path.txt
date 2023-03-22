@@ -1,3 +1,0 @@
-1) cmd
-2) cd Desktop\FAKS\GitHub\Diplomski_vs_code\src
-3) code .
